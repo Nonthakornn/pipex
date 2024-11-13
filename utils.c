@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/09 08:31:24 by nchencha          #+#    #+#             */
-/*   Updated: 2024/11/14 02:19:01 by nchencha         ###   ########.fr       */
+/*   Created: 2024/11/14 02:15:27 by nchencha          #+#    #+#             */
+/*   Updated: 2024/11/14 02:35:31 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "pipex.h"
 
-# include "libft.h"
-
-void	ft_error(char *msg);
-
-
-#endif
+void ft_error(char *msg)
+{
+	ft_putstr_fd(msg, 2);
+	exit (1);
+}

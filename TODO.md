@@ -17,11 +17,11 @@
 - `strerror`
 - `access`
 - `dup`
-- `dup2`
+- `dup2` - Copies descriptor table entry oldfd to descriptor table entry newfd (If newfd was open, closes newfd before the copy)
 - `execve`
 - `exit`
-- `fork`
-- `pipe`
+- `fork` - Used to creat a seperate, duplicate process.
+- `pipe` - Pipes are used when you want to communicate between two precesses. Ex. A single program that wants to create a new process and communicate with the child process.
 - `unlink`
 - `wait`
 - `waitpid`
@@ -29,5 +29,6 @@
 
 ## TODO
 
-- Handle arguents error.
-- Rewrite split without memory leaks
+- [ ] Do this the last before submit work - Change back `CFLAGS = -Wall`
+- [x] Handle arguents error. if (argc != 5) -> error.
+- [ ] Rewrite split without memory leaks
