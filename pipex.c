@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:33:19 by nchencha          #+#    #+#             */
-/*   Updated: 2024/11/14 02:26:10 by nchencha         ###   ########.fr       */
+/*   Updated: 2024/11/14 02:42:27 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int main(int argc, char **argv, char **envp)
 
 	}
 	else
-		ft_error("Error argments is not 5\n");
+		ft_error("Error: Arguments is not 5\n");
 	return (0);
 }
