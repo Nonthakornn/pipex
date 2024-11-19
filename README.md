@@ -27,6 +27,10 @@
 - `waitpid`
 - libft is allowed
 
+## Note
+
+- `wc -w` - it also count all the word that exits on the same line.
+
 ## TODO
 
 - [ ] Do this the last before submit work - Change back `CFLAGS = -Wall`
