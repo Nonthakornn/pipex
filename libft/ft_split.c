@@ -6,61 +6,33 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 20:45:38 by nchencha          #+#    #+#             */
-/*   Updated: 2024/09/07 21:23:38 by nchencha         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:10:15 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	word_count(char *str, char c);
+static int	word_count(char *str, char sep);
 static char	*fill_word(char *str, int start, int end);
-static void	ft_free(char **str_array, int count);
+static void	free_ft_split(char **str);
+static char	**hadle_allocate_fail(char **arr);
 
-char	**ft_split(char *s, char c)
-{
-	char	**array;
-	int		i;
-	int		start;
-	int		end;
-
-	array = malloc((word_count(s, c) + 1) * sizeof(char *));
-	if (!array)
-		return (NULL);
-	i = 0;
-	start = 0;
-	end = 0;
-	while (i < word_count(s, c))
-	{
-		while (s[end] == c)
-			end++;
-		start = end;
-		while (s[end] != c && s[end] != '\0')
-			end++;
-		array[i] = fill_word(s, start, end);
-		if (!array[i])
-			ft_free(array, i);
-		i++;
-	}
-	array[i] = NULL;
-	return (array);
-}
-
-static int	word_count(char *str, char c)
+static int	word_count(char *str, char sep)
 {
 	int	count;
-	int	split;
+	int	in_word;
 
 	count = 0;
-	split = 0;
+	in_word = 0;
 	while (*str)
 	{
-		if (*str != c && split == 0)
+		if (*str == sep)
+			in_word = 0;
+		else if (*str != sep && in_word == 0)
 		{
-			split = 1;
 			count++;
+			in_word = 1;
 		}
-		else if (*str == c)
-			split = 0;
 		str++;
 	}
 	return (count);
@@ -68,45 +40,63 @@ static int	word_count(char *str, char c)
 
 static char	*fill_word(char *str, int start, int end)
 {
-	char	*word;
 	int		i;
+	char	*word;
 
-	word = (char *)malloc((end - start + 1) * sizeof(char));
 	i = 0;
+	word = malloc(sizeof(char) * (end - start + 1));
 	if (!word)
 		return (NULL);
 	while (start < end)
-	{
-		word[i] = str[start];
-		start++;
-		i++;
-	}
+		word[i++] = str[start++];
 	word[i] = '\0';
 	return (word);
 }
 
-static void	ft_free(char **str_array, int count)
+static void	free_ft_split(char **str)
 {
 	int	i;
 
 	i = 0;
-	while (i < count)
+	while (str[i])
 	{
-		free(str_array[i]);
+		free(str[i]);
 		i++;
 	}
-	free(str_array);
+	free(str);
 }
 
-// int main()
-// {
-// 	char **res;
-// 	res = ft_split("aaaaabnnnnnnnbmmmmbsss", 'b');
-// 	int i = 0;
-// 	while (res[i])
-// 	{
-// 		printf("'%s'\n", res[i]);
-// 		i++;
-// 	}
-// 	ft_free(res, i);
-// }
+static char	**hadle_allocate_fail(char **arr)
+{
+	free_ft_split(arr);
+	return (NULL);
+}
+
+char	**ft_split(char *str, char sep)
+{
+	int		i;
+	int		start;
+	int		end;
+	char	**arr;
+
+	start = 0;
+	end = 0;
+	i = 0;
+	arr = malloc(sizeof(char *) * (word_count(str, sep) + 1));
+	if (!arr)
+		return (NULL);
+	while (i < word_count(str, sep))
+	{
+		while (str[end] == sep)
+			end++;
+		start = end;
+		while (str[end] != sep && str[end])
+			end++;
+		arr[i] = fill_word(str, start, end);
+		if (!arr[i])
+			return (hadle_allocate_fail(arr));
+		i++;
+	}
+	arr[i] = NULL;
+	return (arr);
+}
