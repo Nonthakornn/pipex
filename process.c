@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 02:15:27 by nchencha          #+#    #+#             */
-/*   Updated: 2024/11/14 02:35:31 by nchencha         ###   ########.fr       */
+/*   Created: 2024/12/29 13:41:10 by nchencha          #+#    #+#             */
+/*   Updated: 2024/12/29 19:10:45 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void ft_error(char *msg)
+void	init_process(t_process **process, char **argv,  char **envp)
 {
-	ft_putstr_fd(msg, 2);
-	exit (1);
+
 }

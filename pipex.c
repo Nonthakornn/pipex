@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nonthakornchencharatmatha <nonthakornch    +#+  +:+       +#+        */
+/*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:33:19 by nchencha          #+#    #+#             */
-/*   Updated: 2024/11/19 23:47:20 by nonthakornc      ###   ########.fr       */
+/*   Updated: 2024/12/29 13:05:27 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int main(int argc, char **argv, char **envp)
 {
-	if (argc == 5)
-	{
-		ft_putstr_fd("OK",1);
+	t_process process;
 
-	}
-	else
+	if (argc != 5)
 		ft_error("Error: Arguments is not 5\n");
+	init_process(&process, argv, envp);
+	
+	
 	return (0);
 }
 
