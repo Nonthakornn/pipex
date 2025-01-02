@@ -6,25 +6,30 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:33:19 by nchencha          #+#    #+#             */
-/*   Updated: 2024/12/29 13:05:27 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/03 04:23:54by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	t_process process;
+	int	pfd[2];
+	int	pid;
 
-	if (argc != 5)
+	if (argc < 5)
 		ft_error("Error: Arguments is not 5\n");
-	init_process(&process, argv, envp);
-	
-	
+	if (pipe(pfd) < 0)
+		exit(EXIT_FAILURE);
+	pid = fork();
+	if (pid < 0)
+		exit(EXIT_FAILURE);
+	if (pid == 0)
+		child_process(argv, pfd, envp);
+	parent_process(argv, pfd, envp);
+	waitpid(pid, NULL, 0);
 	return (0);
 }
-
-
 
 /*
 Testing:
@@ -33,10 +38,8 @@ Testing:
 ./pipex text.txt "cat" "grep Hello" out
 ./pipex text.txt "sleep 1" "sleep 10" outfile (Should sleep 10 second);
 
-
 < text.txt grep Hello | wc -w > out
 ./pipex text.txt "grep Hello" "wc -w" out
-
 
 #Error Case
 ./pipex ./src/pipex.c "caet" "grep -i int" out
@@ -46,7 +49,7 @@ caet: command not found
 grepx: command not found
 
 # sleep Test
-1. text based commands execute correctly, for example infile "grep Now" "wc -w" outfile  infile "grep Now" "grep Now" outfile
+1. text based commands execute correctly,
 2. infile "sleep 1" "wc -w" outfile results in 1 second blink
 3. infile "wc -w" "sleep 1" outfile results in 1 second blink
 4. infile "sleep 1" "sleep 10" outfile results in 10 seconds blink
@@ -55,5 +58,4 @@ grepx: command not found
 Note:
 < text.txt grep Hello | wc -l > out 
 grep Hello < text.txt | wc -l > out
-
 */

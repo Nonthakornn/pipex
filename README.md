@@ -30,9 +30,3 @@
 ## Note
 
 - `wc -w` - it also count all the word that exits on the same line.
-
-## TODO
-
-- [ ] Do this the last before submit work - Change back `CFLAGS = -Wall`
-- [x] Handle arguents error. if (argc != 5) -> error.
-- [ ] Rewrite split without memory leaks

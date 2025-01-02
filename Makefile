@@ -7,7 +7,7 @@ LIBFT_DIR = libft
 LIBFT_LIB = libft/libft.a
 IFLAGS = -I$(LIBFT_DIR) 
 
-SRCS_FILES = $(wildcard ./*.c)
+SRCS_FILES = $(wildcard ./src/*.c)
 OBJ_FILES = $(SRCS_FILES:.c=.o)
 
 BLUE = \033[34m
