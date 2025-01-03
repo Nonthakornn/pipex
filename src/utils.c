@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 03:36:41 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/03 05:29:35 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/04 02:29:31 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,11 @@ No such file or directory	ENOENT(2); exit(1)
 Command not found    		ENOENT(2) exit(127)
 permission denile    EACCESS(13)    exit(126)
 fork and pipe fail    exit(127)
+
+**error message
+`/usr/bin/lx` - bash: /usr/bin/lx: No such file or directory
+`lx` -  `lx` : command not found
+
+`cat nofile.txt` - <command>: <filename.txt>: No such file of directory
+`/use/bin/cat nofile.txt` - <command>: <filename.txt>: No such file of directory
 */

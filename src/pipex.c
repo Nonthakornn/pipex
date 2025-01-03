@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:33:19 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/03 04:23:54by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/04 02:36:22 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,6 @@ grepx: command not found
 Note:
 < text.txt grep Hello | wc -l > out 
 grep Hello < text.txt | wc -l > out
+child process terminates but its parent process
+hasn't yet collected its exit status
 */
