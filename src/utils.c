@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 03:36:41 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/04 20:53:54 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/05 03:27:42 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_findword(char *envp, char *word)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (word[i])
 	{
@@ -26,10 +26,10 @@ int	ft_findword(char *envp, char *word)
 	return (1);
 }
 
-void	ft_error(char *msg)
+void	ft_error(char *msg, int err_num)
 {
 	ft_putstr_fd(msg, STDERR_FILENO);
-	exit(1);
+	ft_exit(err_num);
 }
 
 void	ft_free(char **str)
@@ -45,17 +45,13 @@ void	ft_free(char **str)
 	free(str);
 }
 
-/*
-void ft_exit(int err_num)
+void	ft_exit(int err_num)
 {
 	if (err_num == 2)
 		exit(127);
-	else if (err_num == 13)
-		exit(126);
 	else
 		exit(1);
 }
-*/
 
 /*
 **File Descriptor

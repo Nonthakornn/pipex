@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 20:34:54 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/04 21:35:48by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/05 03:22:40 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	get_env(char **envp)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (envp[i])
 	{
@@ -26,45 +26,53 @@ int	get_env(char **envp)
 	return (-1);
 }
 
-char *find_path(char *cmd, char **envp)
+static char	*check_absolute_path(char *cmd)
 {
-	int	i;
-	char **env_vec;
-	char *path;
-	char *full_path;
-
 	if (cmd[0] == '/')
 	{
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
-	env_vec = NULL;	
-	i = get_env(envp);
-	if (i != -1)
-	{
-		dprintf(2,"PATH value: %s\n", envp[i]);
-		env_vec = ft_split(envp[i] + 5, ':');
-		if (!env_vec)
-		{
-			ft_free(env_vec);
-			ft_error("Error spliting path");
-		}
-	}
-	else
-		dprintf(2,"Error");
+	return (NULL);
+}
+
+static char	*try_paths(char **env_vec, char *cmd)
+{
+	int		i;
+	char	*path;
+	char	*full_path;
+
 	i = 0;
 	while (env_vec[i])
 	{
 		path = ft_strjoin(env_vec[i], "/");
 		full_path = ft_strjoin(path, cmd);
-		// dprintf(2, "Full path: %s\n", full_path);
 		free(path);
 		if (access(full_path, F_OK) == 0)
 			return (full_path);
+		free(full_path);
 		i++;
 	}
-	return NULL;
-
+	return (NULL);
 }
 
+char	*find_path(char *cmd, char **envp)
+{
+	char	**env_vec;
+	char	*result;
+	int		i;
+
+	result = check_absolute_path(cmd);
+	if (result)
+		return (result);
+	i = get_env(envp);
+	if (i == -1)
+		ft_error("error finding env", EXIT_FAILURE);
+	env_vec = ft_split(envp[i] + 5, ':');
+	if (!env_vec)
+		ft_error("Error spliting path", EXIT_FAILURE);
+	result = try_paths(env_vec, cmd);
+	ft_free(env_vec);
+	return (result);
+}

@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:33:19 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/05 00:01:31 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:49:38 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,18 @@ int	main(int argc, char **argv, char **envp)
 	int	pid;
 
 	if (argc != 5)
-		ft_error("Error: Arguments is not 5\n");
+		ft_error("Error: Arguments is not 5\n", EAGAIN);
 	if (pipe(pfd) < 0)
-		ft_error("pipe fail");
+	{
+		ft_putendl_fd("pipe fail", 2);
+		exit(1);
+	}
 	pid = fork();
 	if (pid < 0)
-		ft_error("fork fail");
+	{
+		ft_putendl_fd("fork fail", 2);
+		exit(1);
+	}
 	if (pid == 0)
 		child_process(argv, pfd, envp);
 	parent_process(argv, pfd, envp);
