@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:33:19 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/05 02:49:38 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/05 03:35:53 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **envp)
 	int	pid;
 
 	if (argc != 5)
-		ft_error("Error: Arguments is not 5\n", EAGAIN);
+		ft_error("Error: Arguments is not 5\n", EXIT_FAILURE);
 	if (pipe(pfd) < 0)
 	{
 		ft_putendl_fd("pipe fail", 2);
