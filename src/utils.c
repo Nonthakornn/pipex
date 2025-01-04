@@ -6,16 +6,43 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 03:36:41 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/04 02:29:31 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/04 20:53:54 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void ft_error(char *msg)
+int	ft_findword(char *envp, char *word)
+{
+	int i;
+	
+	i = 0;
+	while (word[i])
+	{
+		if (envp[i] != word[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	ft_error(char *msg)
 {
 	ft_putstr_fd(msg, STDERR_FILENO);
 	exit(1);
+}
+
+void	ft_free(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }
 
 /*

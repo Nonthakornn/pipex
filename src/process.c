@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:41:23 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/04 02:40:55 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:00:10 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,13 @@ void	child_process(char **argv, int *pfd, char **envp)
 	close(pfd[0]);
 	close(pfd[1]);
 	close(infile);
-	// execute(argv[2], envp);
-	execlp("sleep", "sleep", "5",NULL);
+	execute(argv[2], envp);
 }
 
 void	parent_process(char **argv, int *pfd, char **envp)
 {
 	int	outfile;
-	char **str;
-	str = malloc(sizeof(char*) *3);
-	str[0] = malloc(sizeof(char) *3);
-	str[1] = malloc(sizeof(char) *4);
 	
-	str[0] = "ls";
-	str[1] = "-rz";
-	str[2] = NULL;	
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile < 0)
 		exit(1); //Fix this later
@@ -48,9 +40,8 @@ void	parent_process(char **argv, int *pfd, char **envp)
 	close(pfd[0]);
 	close(pfd[1]);
 	close(outfile);
-	// execute(argv[3], envp);
+	execute(argv[3], envp);
 	// execve("/usr/bin/ls", str, envp);
-	execlp("sleep", "sleep", "5", NULL);
 	perror("execlp error");
 }
 

@@ -6,14 +6,36 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 02:36:33 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/04 02:42:00 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/04 18:04:52y nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void execute(int *argc, char **envp)
+void execute(char *argv, char **envp)
 {
+	char **cmd;
+	char *path;
+	
+	cmd = ft_split(argv, ' ');
+	if (!cmd)
+		ft_free(cmd);
+	// for (int j = 0; j < 2; j++)
+	// 	dprintf(2, "%s ",cmd[j]);
+	path = find_path(cmd[0], envp);
+	if (!path)
+	{
+		write(2, "Command '", 9);
+		write(2, cmd[0], ft_strlen(cmd[0]));
+		write(2, "' not found\n", 12);
+		ft_free(cmd);
+		exit(127);
+	}
+	dprintf(2,"PATH that can access: %s\n", path);
+	if (execve(path, cmd, envp) < 0)
+		perror("execve");
+
+	ft_free(cmd);
 
 }
 

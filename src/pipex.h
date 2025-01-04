@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:31:24 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/03 03:17:23 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/04 23:58:10 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,17 @@
 # include <errno.h>
 # include <sys/wait.h>
 
-//error
+//utils
 void	ft_error(char *msg);
+void	ft_free(char **str);
+int		ft_findword(char *envp, char *word);
 
 //
 void	child_process(char **argv, int *pfd, char **envp);
 void	parent_process(char **argv, int *pfd, char **envp);
+void	execute(char *argv, char **envp);
+char	*find_path(char *cmd, char **envp);
+int		get_env(char **envp);
+
 
 #endif
