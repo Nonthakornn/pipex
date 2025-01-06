@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:41:23 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/06 23:58:10 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/07 00:10:49 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	child_process2(char **argv, int *pfd, char **envp)
 	if (outfile < 0)
 	{
 		write(2, "pipex: ", 8);
-		write(2, argv[3], ft_strlen(argv[3]));
+		write(2, argv[4], ft_strlen(argv[4]));
 		write(2, ": Permission denied\n", 21);
 		close(pfd[0]);
 		exit(1);
