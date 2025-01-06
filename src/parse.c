@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/04 20:34:54 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/05 03:22:40 by nchencha         ###   ########.fr       */
+/*   Created: 2025/01/06 18:08:01 by nchencha          #+#    #+#             */
+/*   Updated: 2025/01/06 19:25:03 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ char	*find_path(char *cmd, char **envp)
 		return (result);
 	i = get_env(envp);
 	if (i == -1)
-		ft_error("error finding env", EXIT_FAILURE);
+		error_msg("Error finding env");
 	env_vec = ft_split(envp[i] + 5, ':');
 	if (!env_vec)
-		ft_error("Error spliting path", EXIT_FAILURE);
+		error_msg("Error spliting path");
 	result = try_paths(env_vec, cmd);
 	ft_free(env_vec);
 	return (result);

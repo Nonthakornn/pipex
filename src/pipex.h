@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:31:24 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/05 02:51:59 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:21:47 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,20 @@
 # include <errno.h>
 # include <sys/wait.h>
 
-void	ft_error(char *msg, int err_num);
-void	ft_exit(int err_num);
+//process
+void	init_process(int *pfd, int *pid, char **argv, char **envp);
+void	child_process1(char **argv, int *pfd, char **envp);
+void	child_process2(char **argv, int *pfd, char **envp);
+void	execute(char *argv, char **envp);
+
+//parse
+int		get_env(char **envp);
+char	*find_path(char *cmd, char **envp);
+
+//utils
+void	error_msg(char *msg);
+void	err_full_path(char *cmd);
+void	err_command(char *cmd);
 void	ft_free(char **str);
 int		ft_findword(char *envp, char *word);
-void	child_process(char **argv, int *pfd, char **envp);
-void	parent_process(char **argv, int *pfd, char **envp);
-void	execute(char *argv, char **envp);
-char	*find_path(char *cmd, char **envp);
-int		get_env(char **envp);
 #endif

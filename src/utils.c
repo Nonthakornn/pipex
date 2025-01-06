@@ -6,30 +6,30 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 03:36:41 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/05 03:27:42 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:57:35 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_findword(char *envp, char *word)
+void	error_msg(char *msg)
 {
-	int	i;
-
-	i = 0;
-	while (word[i])
-	{
-		if (envp[i] != word[i])
-			return (0);
-		i++;
-	}
-	return (1);
+	ft_putendl_fd(msg, STDERR_FILENO);
+	exit (1);
 }
 
-void	ft_error(char *msg, int err_num)
+void	err_full_path(char *cmd)
 {
-	ft_putstr_fd(msg, STDERR_FILENO);
-	ft_exit(err_num);
+	write(2, "pipex: ", 8);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": No such file or directory\n", 29);
+}
+
+void	err_command(char *cmd)
+{
+	write(2, "Command '", 9);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, "' not found\n", 12);
 }
 
 void	ft_free(char **str)
@@ -45,12 +45,18 @@ void	ft_free(char **str)
 	free(str);
 }
 
-void	ft_exit(int err_num)
+int	ft_findword(char *envp, char *word)
 {
-	if (err_num == 2)
-		exit(127);
-	else
-		exit(1);
+	int	i;
+
+	i = 0;
+	while (word[i])
+	{
+		if (envp[i] != word[i])
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 /*

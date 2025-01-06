@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:33:19 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/05 03:35:53 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:22:14 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,19 @@
 int	main(int argc, char **argv, char **envp)
 {
 	int	pfd[2];
-	int	pid;
+	int	pid[2];
+	int	status;
+	int	exit_status;
 
 	if (argc != 5)
-		ft_error("Error: Arguments is not 5\n", EXIT_FAILURE);
-	if (pipe(pfd) < 0)
-	{
-		ft_putendl_fd("pipe fail", 2);
-		exit(1);
-	}
-	pid = fork();
-	if (pid < 0)
-	{
-		ft_putendl_fd("fork fail", 2);
-		exit(1);
-	}
-	if (pid == 0)
-		child_process(argv, pfd, envp);
-	parent_process(argv, pfd, envp);
-	waitpid(pid, NULL, 0);
-	return (0);
+		error_msg("Error: Arguments is not 5");
+	exit_status = 0;
+	init_process(pfd, pid, argv, envp);
+	waitpid(pid[0], NULL, 0);
+	waitpid(pid[1], &status, 0);
+	if (WIFEXITED(status))
+		exit_status = WEXITSTATUS(status);
+	return (exit_status);
 }
 
 /*
