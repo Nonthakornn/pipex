@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 03:36:41 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/06 19:57:35 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:38:28 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ void	err_command(char *cmd)
 	write(2, "' not found\n", 12);
 }
 
+void	err_path_per(char *path)
+{
+	write(2, "pipex: ", 8);
+	write(2, path, ft_strlen(path));
+	write(2, ": Permission denied\n", 21);
+}
+
 void	ft_free(char **str)
 {
 	int	i;
@@ -43,20 +50,6 @@ void	ft_free(char **str)
 		i++;
 	}
 	free(str);
-}
-
-int	ft_findword(char *envp, char *word)
-{
-	int	i;
-
-	i = 0;
-	while (word[i])
-	{
-		if (envp[i] != word[i])
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 /*

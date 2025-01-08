@@ -6,29 +6,14 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:41:23 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/07 00:10:49 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:52:52 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	init_process(int *pfd, int *pid, char **argv, char **envp)
-{
-	if (pipe(pfd) < 0)
-		error_msg("pipe fail");
-	pid[0] = fork();
-	if (pid[0] < 0)
-		error_msg("fork fail");
-	if (pid[0] == 0)
-		child_process1(argv, pfd, envp);
-	else
-		close(pfd[1]);
-	pid[1] = fork();
-	if (pid[1] == 0)
-		child_process2(argv, pfd, envp);
-	else
-		close(pfd[0]);
-}
+static void	exec_fail(char *path, char **cmd);
+static void	null_fail(char **cmd);
 
 void	execute(char *argv, char **envp)
 {
@@ -36,8 +21,12 @@ void	execute(char *argv, char **envp)
 	char	*path;
 
 	cmd = ft_split(argv, ' ');
-	if (!cmd)
-		exit(1);
+	if (!cmd || !cmd[0])
+	{
+		if (!cmd[0])
+			null_fail(cmd);
+		exit(127);
+	}
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{
@@ -49,14 +38,7 @@ void	execute(char *argv, char **envp)
 		exit(127);
 	}
 	if (execve(path, cmd, envp) < 0)
-	{
-		write(2, "pipex: ", 8);
-		write(2, path, ft_strlen(path));
-		write(2, ": Permission denied\n", 21);
-		free(path);
-		ft_free(cmd);
-		exit(126);
-	}
+		exec_fail(path, cmd);
 }
 
 void	child_process1(char **argv, int *pfd, char **envp)
@@ -97,4 +79,19 @@ void	child_process2(char **argv, int *pfd, char **envp)
 	dup2(pfd[0], STDIN_FILENO);
 	close(pfd[0]);
 	execute(argv[3], envp);
+}
+
+static void	exec_fail(char *path, char **cmd)
+{
+	err_path_per(path);
+	free(path);
+	ft_free(cmd);
+	exit(126);
+}
+
+static void	null_fail(char **cmd)
+{
+	err_command(cmd[0]);
+	ft_free(cmd);
+	exit(127);
 }

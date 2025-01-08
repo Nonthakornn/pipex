@@ -6,11 +6,25 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:08:01 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/06 19:25:03 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:39:29 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	ft_findword(char *envp, char *word)
+{
+	int	i;
+
+	i = 0;
+	while (word[i])
+	{
+		if (envp[i] != word[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	get_env(char **envp)
 {

@@ -6,11 +6,29 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:33:19 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/06 20:22:14 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:46:55 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	init_process(int *pfd, int *pid, char **argv, char **envp)
+{
+	if (pipe(pfd) < 0)
+		error_msg("pipe fail");
+	pid[0] = fork();
+	if (pid[0] < 0)
+		error_msg("fork fail");
+	if (pid[0] == 0)
+		child_process1(argv, pfd, envp);
+	else
+		close(pfd[1]);
+	pid[1] = fork();
+	if (pid[1] == 0)
+		child_process2(argv, pfd, envp);
+	else
+		close(pfd[0]);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -21,6 +39,11 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 5)
 		error_msg("Error: Arguments is not 5");
+	if (get_env(envp) == -1)
+	{
+		error_msg("Error Finding env");
+		return (1);
+	}
 	exit_status = 0;
 	init_process(pfd, pid, argv, envp);
 	waitpid(pid[0], NULL, 0);
@@ -32,7 +55,13 @@ int	main(int argc, char **argv, char **envp)
 
 /*
 Testing:
+valgrind: 
+--leak-check=full 
+--show-leak-kinds=all
+--track-fds=yes
 
+unset PATH use this 
+/usr/local/bin/valgrind --leak-check=full --show-leak-kinds=all 
 ./pipex text.txt "grep He" "wc -w" out
 ./pipex text.txt "cat" "grep Hello" out
 ./pipex text.txt "sleep 1" "sleep 10" outfile (Should sleep 10 second);

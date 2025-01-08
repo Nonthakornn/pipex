@@ -6,7 +6,7 @@
 /*   By: nchencha <nchencha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 08:31:24 by nchencha          #+#    #+#             */
-/*   Updated: 2025/01/06 20:21:47 by nchencha         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:37:53 by nchencha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*find_path(char *cmd, char **envp);
 void	error_msg(char *msg);
 void	err_full_path(char *cmd);
 void	err_command(char *cmd);
+void	err_path_per(char *path);
 void	ft_free(char **str);
 int		ft_findword(char *envp, char *word);
 #endif
